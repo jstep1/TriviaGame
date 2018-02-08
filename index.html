@@ -5,8 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Wolf of Wall Street Trivia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://jstep1.github.io/TriviaGame/assets/css/reset.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://jstep1.github.io/TriviaGame/assets/css/style.css" />
 </head>
 
 <body background="https://www.fluentu.com/blog/business-english/wp-content/uploads/sites/20/2015/02/business-english-from-the-wolf-of-wall-street-finance.jpg" style="background-size:100%">
@@ -21,12 +22,13 @@
                     <h1 class="hdr">Wolf of Wall Street Trivia</h1>
                     <div><span id="pic"><img class="toggle" src="https://media.giphy.com/media/wfQaYM62wvfuU/giphy.gif"></span></div><br>
                     <button id="strt">Start</button><br>
+                    <button id="rst" style="display: none">Reset</button>
                     <p class="toggle endr" style="display: none">Time Remaining: <span id="time"></span></p><br>
                     <p class="toggle"><span id="question"></span></p><br>
-                    <button class="toggle ans" style="display: none"><span id="answer1"></span></button><br>
-                    <button class="toggle ans" style="display: none"><span id="answer2"></span></button><br>
-                    <button class="toggle ans" style="display: none"><span id="answer3"></span></button><br>
-                    <button class="toggle ans" style="display: none"><span id="answer4"></span></button><br>
+                    <button class="toggle ans" id="answer1" style="display: none"></button><br>
+                    <button class="toggle ans" id="answer2" style="display: none"></button><br>
+                    <button class="toggle ans" id="answer3" style="display: none"></button><br>
+                    <button class="toggle ans" id="answer4" style="display: none"></button><br>
                 </div>
             </div>
 
@@ -37,6 +39,6 @@
 
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="assets/javascript/app.js"></script>
+<script src="https://jstep1.github.io/TriviaGame/assets/javascript/app.js"></script>
 </body>
 </html>

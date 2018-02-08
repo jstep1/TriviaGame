@@ -6,3 +6,13 @@
     padding: 20px;
     border-radius: 15px;
 }
+
+button {
+    width: 60%;
+    font-weight: bold;
+
+}
+
+#rst {
+    margin-bottom:40px
+}
