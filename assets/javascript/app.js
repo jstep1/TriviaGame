@@ -1,122 +1,162 @@
+// Declare initial global variables and reset function
+
 var correct = 0;
 var incorrect = 0;
 var unanswered = 10;
+var seconds = 15;
+var index = 0;
+var timer = null;
 
 var reset = function () {
     correct = 0;
     incorrect = 0;
     unanswered = 10;
-    
+    seconds = 15;
+    index = 0;
 }
 
-var q1 = { question: "At which firm did Jordan begin his career?",
+// List of possible trivia questions
+
+var qs = [ {question: "At which firm did Jordan begin his career?",
             answers: ["Lehman Brothers", "Merrill Lynch", "JP Morgan Chase", "Berkshire Hathaway"],
-            correct: "<b>Lehman Brothers</b>"
-            }
+            correct: ["answer1", "Lehman Brothers"],
+            image: ""},
+            
+            {question: "What was the name of Jordan's yacht?",
+            answers: ["The Duchess", "The Odyssey", "The Naomi", "The Wolf"],
+            correct: ["answer3", "The Naomi"],
+            image: ""},
+            
+            {question: "What was the primary criminal charge brought against Stratton Oakmont?",
+            answers: ["Counterfeiting Currency", "Stock Manipulation", "Embezzlement", "Identity Theft"],
+            correct: ["answer2", "Stock Manipulation"],
+            image: ""},
+            
+            {question: "Who was Jordan Belfort's successor after he decided to step down?",
+            answers: ["Nicky Koskoff", "Mark Hana", "Chester Ming", "Donnie Azoff"],
+            correct: ["answer4", "Donnie Azoff"],
+            image: ""},
 
-var q2 = { question: "What was the name of Jordan's yacht?",
-            answers: ["The Naomi", "The Duchess", "The Odyssey", "The Wolf"],
-            correct: "The Naomi"
-}
-
-var q3 = { question: "What was the primary criminal charge brought against Stratton Oakmont?",
-            answers: ["Stock Manipulation", "Counterfeiting Currency", "Embezzlement", "Identity Theft"],
-            correct: "Stock Manipulation"
-}
-
-var q4 = { question: "Who was Jordan Belfort's successor after he decided to step down?",
-            answers: ["Donnie Azoff", "Nicky Koskoff", "Mark Hana", "Chester Ming"],
-            correct: "Donnie Azoff"
-}
-
-var q5 = { question: "This fashion accessory company was used by Stratton Oakmont to defraud investors:",
+            {question: "This fashion accessory company was used by Stratton Oakmont to defraud investors:",
             answers: ["Steve Madden", "Michael Kors", "Louis Vuitton", "Versace"],
-            correct: "Steve Madden"
-}
+            correct: ["answer1", "Steve Madden"],
+            image: ""},
 
-var q6 = { question: "In which country did Jordan create bank accounts to avoid United States financial regulators?",
-            answers: ["Switzerland", "Sweden", "Cayman Islands", "Saudi Arabia"],
-            correct: "Switzerland"
-}
-
-var q7 = { question: "What was the color of Jordan's Ferrari?",
+            {question: "In which country did Jordan create bank accounts to avoid United States financial regulators?",
+            answers: ["Sweden", "Cayman Islands", "Switzerland", "Saudi Arabia"],
+            correct: ["answer3", "Switzerland"],
+            image: ""},
+            
+            {question: "What was the color of Jordan's Ferrari?",
             answers: ["White", "Red", "Black", "Yellow"],
-            correct: "White"
+            correct: ["answer1", "White"],
+            image: "<iframe src='https://giphy.com/embed/6g8XtfomGPqjS' width='480' height='206' frameBorder='0' class='giphy-embed' allowFullScreen></iframe><p><a href='https://giphy.com/gifs/leonardo-dicaprio-wolf-of-wall-street-6g8XtfomGPqjS'></a></p>"},
+
+            {question: "Donny Azhoff was married to his:",
+            answers: ["Sister", "Neighbor", "College Roommate", "Cousin"],
+            correct: ["answer4", "Cousin"],
+            image: ""},
+
+            {question: "Agent Patrick Denham, the lead investigator, was part of which government agency?",
+            answers: ["Security and Exchange Commission (SEC)", "Federal Bureau of Investigation (FBI)", "Central Intelligence Agency (CIA)", "Department of Homeland Security (DHS)"],
+            correct: ["answer2", "Federal Bureau of Investigation (FBI)"],
+            image: ""},
+
+            {question: "Which restaurant chain had shady business dealings with the same individuals involved in covering up Jordan's crimes?",
+            answers: ["Domino's", "P.F. Chang's", "Benihana", "Outback Steakhouse"],
+            correct: ["answer3", "Benihana"],
+            image: ""} ];
+
+// Functions used for gameplay including game initiation and answer selection
+
+var questionStart = function() {
+    if(index < 10) {
+        countDown();
+        $("#pic").empty();
+        $(".toggle").attr("style", "");
+        $("#question").text(qs[index].question);
+        $("#answer1").text(qs[index].answers[0]);
+        $("#answer2").text(qs[index].answers[1]);
+        $("#answer3").text(qs[index].answers[2]);
+        $("#answer4").text(qs[index].answers[3]);
+    }
+    else {
+        endGame();
+    }
 }
-
-var q8 = { question: "Donny Azhoff was married to his:",
-            answers: ["Cousin", "Neighbor", "College Roommate", "Sister"],
-            correct: "Cousin"
-}
-
-var q9 = { question: "Agent Patrick Denham, the lead investigator, was part of which government agency?",
-            answers: ["Federal Bureau of Investigation (FBI)", "Security and Exchange Commission (SEC)", "Central Intelligence Agency (CIA)", "Department of Homeland Security (DHS)"],
-            correct: "Federal Bureau of Investigation (FBI)"
-}
-
-var q10 = { question: "Which restaurant chain had shady business dealings with the same individuals involved in covering up Jordan's crimes?",
-            answers: ["Benihana", "Domino's", "P.F. Chang's", "Outback Steakhouse"],
-            correct: "Benihana"
-}
-
-// var mixQs = function () {
-//     for(var i=1; i<= 10; i++)
-//     {
-//         var arr = [];
-//         if(!arr.includes(qi)) {
-//         qi = q + (Math.floor(Math.random() * 10) + 1);
-//         arr.push(qi);
-//         }
-//     }
-// }
-
-// mixQs();
-
-console.log(q1.question);
 
 var correctAnswer = function () {
+    $(".ans").attr("style", "display: none");
     $("#question").text("Correct!")
     correct++;
+    index++;
+    unanswered--;
+    clearTimeout(timer);
+    timer = null;
+    seconds = 15;
+    setTimeout(questionStart, 5 * 1000);
 }
 
 var incorrectAnswer = function () {
-    $("#question").text("Nope! The correct answer was: " + q1.correct);
+    $(".ans").attr("style", "display: none");
+    $("#question").html("Nope! The correct answer was: <b>" + qs[index].correct[1] + "</b>");
     incorrect++;
+    index++;
+    unanswered--;
+    clearTimeout(timer);
+    timer = null;
+    seconds = 15;
+    setTimeout(questionStart, 5 * 1000);
 }
 
 var noAnswer = function () {
-    $("#question").html("Out of time! The correct answer was: " + q1.correct);
-    unanswered--;
+    $(".ans").attr("style", "display: none");
+    $("#question").html("Out of time! The correct answer was: <b>" + qs[index].correct[1] + "</b>");
+    index++;
+    clearTimeout(timer);
+    timer = null;
+    seconds = 15;
+    setTimeout(questionStart, 5 * 1000);
+
 }
 
-var seconds = 30;
+var endGame = function () {
+    $(".endr").attr("style", "display: none");
+    $("#question").html("<p>Correct Answers: " + correct + "</p><br><p>Incorrect: " + incorrect + "</p><br><p>Unanswered: " + unanswered);
+    reset();
+    setTimeout(questionStart, 5 * 1000);
+}
+
+// Timer function
 
 var countDown = function() {
     seconds--;
     if(seconds > 0){
-       setTimeout(countDown,1000);
+       timer = setTimeout(countDown, 1000);
        $("#time").text(seconds);
     }
     else {
         noAnswer();
-        seconds = 30;
+        seconds= 15;
     }
     
  }
 
+// Click events for buttons throughout game
+
 $("#strt").on("click", function() {
-    setTimeout(countDown, 1000);
-    $("#pic").empty();
-    $("#question").text(q1.question);
-    $(".toggle").attr("style", "");
     $("#strt").attr("style", "display: none");
-    $("#answer1").text(q1.answers[0]);
-    $("#answer2").text(q1.answers[1]);
-    $("#answer3").text(q1.answers[2]);
-    $("#answer4").text(q1.answers[3]);
+    questionStart();
+
 });
 
-$("#ans").on("click", function() {
-    clearTimeout();
+$(".ans").on("click", function(event) {
+    var choice = event.target.id;
+    if(choice === qs[index].correct[0]) {
+    correctAnswer();
+    }
+    else {
+    incorrectAnswer();
+    }
 });
 
