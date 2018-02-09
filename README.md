@@ -1,5 +1,5 @@
 # Wolf of Wall Street Trivia
-<img src = "https://jstep1.github.io/TriviaGame/assets/images/wowstrivia.jpg">
+<img src = "assets/images/wowstrivia.jpg">
 Test your knowledge of one of the best Martin Scorsese movies of all time - Wolf of Wall Street! This movie will quiz you with 10 questions about the film's characters and plot.
 
 # Instructions
