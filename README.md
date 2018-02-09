@@ -13,7 +13,9 @@ After the game is finished you will see a scoreboard that displays your results.
 
 Here is an example:
 
-![wolfofwallstreettrivia](assets/images/Wolf_of_Wall_Street_Trivia.webm)
+![wolfofwallstreettriviastart](assets/images/wowstriviastart.mp4)
+![wolfofwallstreettriviaunanswered](assets/images/wowstriviaunanswered.mp4)
+![wolfofwallstreettriviaend](assets/images/wowstriviaend.mp4)
 
 # About The Game
 This game was built using a series of HTML, CSS and Javascript along with the jQuery library. Please see the source code for a breakdown of elements used.
